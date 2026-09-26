@@ -1,0 +1,8 @@
+{
+  "name": "Lumière Pâtisserie | Luxury Artisanal Cakes Pakistan",
+  "description": "Pakistan's premier luxury cake boutique. Handcrafted celebration cakes, bespoke wedding tiers, and decadent desserts delivered fresh across Lahore, Karachi & Islamabad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
