@@ -1,6 +1,7 @@
 import React from 'react';
 import { ATELIER_IMAGE } from '../data/mockData';
 import { Award, Heart, Sparkles, ShieldCheck } from 'lucide-react';
+import { getSafeImageUrl, FALLBACK_WEDDING_IMAGE } from '../utils/imageUtils';
 
 export const AboutSection: React.FC = () => {
   return (
@@ -12,8 +13,9 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#ECE3DB] bg-white group">
               <img
-                src={ATELIER_IMAGE}
+                src={getSafeImageUrl(ATELIER_IMAGE)}
                 alt="Lumière master pâtissier delicately decorating a tiered wedding cake"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_WEDDING_IMAGE; }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
               />

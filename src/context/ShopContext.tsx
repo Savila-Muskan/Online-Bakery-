@@ -95,18 +95,40 @@ interface ShopContextType {
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Load products from localStorage or default
+  // Load products from localStorage or default, ensuring image paths are valid on Vercel
   const [products, setProducts] = useState<Product[]>(() => {
     const saved = localStorage.getItem('lumiere_products');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { console.error(e); }
+      try {
+        const parsed: Product[] = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(prod => {
+            const initialMatch = INITIAL_PRODUCTS.find(ip => ip.id === prod.id);
+            return {
+              ...prod,
+              images: prod.images.map((img, idx) => {
+                if (img && img.startsWith('/src/assets/images/')) {
+                  return initialMatch?.images[idx] || img.replace('/src/assets/images/', '/images/');
+                }
+                return img;
+              })
+            };
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
     return INITIAL_PRODUCTS;
   });
 
-  // Save products when updated
+  // Save products when updated with quota protection
   useEffect(() => {
-    localStorage.setItem('lumiere_products', JSON.stringify(products));
+    try {
+      localStorage.setItem('lumiere_products', JSON.stringify(products));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving products:', e);
+    }
   }, [products]);
 
   // Cart
@@ -119,7 +141,11 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    localStorage.setItem('lumiere_cart', JSON.stringify(cart));
+    try {
+      localStorage.setItem('lumiere_cart', JSON.stringify(cart));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving cart:', e);
+    }
   }, [cart]);
 
   // Promo code
@@ -136,7 +162,11 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    localStorage.setItem('lumiere_wishlist', JSON.stringify(wishlist));
+    try {
+      localStorage.setItem('lumiere_wishlist', JSON.stringify(wishlist));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving wishlist:', e);
+    }
   }, [wishlist]);
 
   // Orders
@@ -149,7 +179,11 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    localStorage.setItem('lumiere_orders', JSON.stringify(orders));
+    try {
+      localStorage.setItem('lumiere_orders', JSON.stringify(orders));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving orders:', e);
+    }
   }, [orders]);
 
   // Custom cake requests
@@ -162,20 +196,44 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    localStorage.setItem('lumiere_custom_requests', JSON.stringify(customRequests));
+    try {
+      localStorage.setItem('lumiere_custom_requests', JSON.stringify(customRequests));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving custom requests:', e);
+    }
   }, [customRequests]);
 
   // Gallery items state (syncs admin uploads to public website gallery)
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() => {
     const saved = localStorage.getItem('cakeshop_gallery');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { console.error(e); }
+      try {
+        const parsed: GalleryItem[] = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(item => {
+            const initialMatch = INITIAL_GALLERY_ITEMS.find(ig => ig.id === item.id);
+            if (item.url && item.url.startsWith('/src/assets/images/')) {
+              return {
+                ...item,
+                url: initialMatch?.url || item.url.replace('/src/assets/images/', '/images/')
+              };
+            }
+            return item;
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
     return INITIAL_GALLERY_ITEMS;
   });
 
   useEffect(() => {
-    localStorage.setItem('cakeshop_gallery', JSON.stringify(galleryItems));
+    try {
+      localStorage.setItem('cakeshop_gallery', JSON.stringify(galleryItems));
+    } catch (e) {
+      console.warn('Storage quota exceeded when saving gallery:', e);
+    }
   }, [galleryItems]);
 
   const addGalleryPhoto = (photo: { url: string; title: string; caption: string; category?: string }): GalleryItem => {

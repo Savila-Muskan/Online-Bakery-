@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Cake, Sparkles } from 'lucide-react';
 import { HERO_PINK_ROSE_CAKE, CHOCOLATE_CAKE_IMAGE, RED_VELVET_IMAGE } from '../data/mockData';
 import { useShop } from '../context/ShopContext';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const Hero: React.FC = () => {
   const { setIsCustomCakeOpen } = useShop();
@@ -137,8 +138,9 @@ export const Hero: React.FC = () => {
             <div className="relative max-w-md sm:max-w-lg w-full transition-all duration-500">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white border-4 border-white">
                 <img
-                  src={activeSlide.image}
+                  src={getSafeImageUrl(activeSlide.image)}
                   alt={activeSlide.alt}
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                   className="w-full h-auto aspect-[4/3] sm:aspect-[4/3] object-cover object-center transform hover:scale-103 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />

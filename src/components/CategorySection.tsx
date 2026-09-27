@@ -2,6 +2,7 @@ import React from 'react';
 import { CATEGORIES_LIST } from '../data/mockData';
 import { useShop } from '../context/ShopContext';
 import { CakeCategory } from '../types';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const CategorySection: React.FC = () => {
   const { activeCategoryFilter, setActiveCategoryFilter, setActiveOccasionFilter } = useShop();
@@ -49,8 +50,9 @@ export const CategorySection: React.FC = () => {
                 }`}>
                   <div className="w-full h-full rounded-full overflow-hidden bg-[#FFF9FA] shadow-md border border-[#F4E6EB]">
                     <img
-                      src={cat.image}
+                      src={getSafeImageUrl(cat.image)}
                       alt={cat.name}
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                       className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500 ease-out"
                       referrerPolicy="no-referrer"
                     />

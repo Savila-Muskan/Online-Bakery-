@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Sparkles, ArrowRight, Upload, CheckCircle2, MessageCircle, X, Calendar, MapPin, Phone, User } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { CHOCOLATE_CAKE_IMAGE, PAKISTAN_CITIES } from '../data/mockData';
+import { compressImageFile, getSafeImageUrl, FALLBACK_CHOCOLATE_IMAGE } from '../utils/imageUtils';
 
 export const CustomCakeSection: React.FC = () => {
   const { isCustomCakeOpen, setIsCustomCakeOpen, submitCustomRequest } = useShop();
@@ -23,16 +24,22 @@ export const CustomCakeSection: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedRequestId, setSubmittedRequestId] = useState('');
 
-  const handleImageUploadSim = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUploadSim = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setReferenceImageUrl(event.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressed = await compressImageFile(file, 1200, 0.82);
+        setReferenceImageUrl(compressed);
+      } catch (err) {
+        console.error('Error compressing reference photo:', err);
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            setReferenceImageUrl(event.target.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
@@ -118,8 +125,9 @@ export const CustomCakeSection: React.FC = () => {
               <div className="relative max-w-sm sm:max-w-md w-full">
                 <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-white">
                   <img
-                    src={CHOCOLATE_CAKE_IMAGE}
+                    src={getSafeImageUrl(CHOCOLATE_CAKE_IMAGE)}
                     alt="Custom chocolate drip cake with piped rosettes"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CHOCOLATE_IMAGE; }}
                     className="w-full h-auto aspect-square object-cover object-center transform hover:scale-103 transition-transform duration-500"
                     referrerPolicy="no-referrer"
                   />

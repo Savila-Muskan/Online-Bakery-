@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart, Star, ShoppingBag, Eye } from 'lucide-react';
 import { Product } from '../types';
 import { useShop } from '../context/ShopContext';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 interface ProductCardProps {
   product: Product;
@@ -56,8 +57,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Image Area with Heart Wishlist & Background */}
       <div className="relative aspect-square w-full overflow-hidden bg-[#FFF9FA]">
         <img
-          src={product.images[0]}
+          src={getSafeImageUrl(product.images[0])}
           alt={product.name}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
           className="w-full h-full object-cover object-center group-hover:scale-106 transition-transform duration-500 ease-out"
           referrerPolicy="no-referrer"
         />

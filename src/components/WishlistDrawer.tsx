@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Heart, ShoppingBag, Trash2 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const WishlistDrawer: React.FC = () => {
   const { isWishlistOpen, setIsWishlistOpen, wishlist, toggleWishlist, products, setSelectedProduct } = useShop();
@@ -54,8 +55,9 @@ export const WishlistDrawer: React.FC = () => {
                   className="flex items-center justify-between p-3.5 bg-[#FFF9FA] hover:bg-[#FFF3F5] rounded-xl border border-[#FAD4DB] gap-3 transition-colors"
                 >
                   <img
-                    src={p.images[0]}
-                    alt=""
+                    src={getSafeImageUrl(p.images[0])}
+                    alt={p.name}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                     className="w-16 h-16 rounded-lg object-cover shrink-0 cursor-pointer border border-[#F6D5DB]"
                     onClick={() => {
                       setSelectedProduct(p);

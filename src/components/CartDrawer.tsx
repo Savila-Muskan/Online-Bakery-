@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const CartDrawer: React.FC = () => {
   const { 
@@ -93,8 +94,9 @@ export const CartDrawer: React.FC = () => {
                   >
                     <div className="flex gap-3">
                       <img
-                        src={item.product.images[0]}
+                        src={getSafeImageUrl(item.product.images[0])}
                         alt={item.product.name}
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                         className="w-16 h-16 rounded-lg object-cover bg-white border border-[#F4E6EB] shrink-0"
                         referrerPolicy="no-referrer"
                       />

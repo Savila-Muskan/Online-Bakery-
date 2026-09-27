@@ -16,6 +16,7 @@ import {
 import { useShop } from '../context/ShopContext';
 import { CakeSize, CakeFlavor, CakeAddOn, CartItemAddOn } from '../types';
 import { STANDARD_ADDONS, TIME_SLOTS } from '../data/mockData';
+import { getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const ProductDetailModal: React.FC = () => {
   const { 
@@ -149,8 +150,9 @@ export const ProductDetailModal: React.FC = () => {
             <div className="lg:col-span-5 space-y-3">
               <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#FFF9FA] border border-[#F4E6EB]">
                 <img
-                  src={selectedProduct.images[activeImageIndex] || selectedProduct.images[0]}
+                  src={getSafeImageUrl(selectedProduct.images[activeImageIndex] || selectedProduct.images[0])}
                   alt={selectedProduct.name}
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                   className="w-full h-full object-cover object-center"
                   referrerPolicy="no-referrer"
                 />
@@ -173,7 +175,12 @@ export const ProductDetailModal: React.FC = () => {
                         activeImageIndex === idx ? 'border-[#E84E7B] shadow-xs' : 'border-[#F4E6EB] opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
+                      <img 
+                        src={getSafeImageUrl(img)} 
+                        alt="" 
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
+                        className="w-full h-full object-cover" 
+                      />
                     </button>
                   ))}
                 </div>

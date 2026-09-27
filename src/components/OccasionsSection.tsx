@@ -3,6 +3,7 @@ import { OCCASIONS_LIST } from '../data/mockData';
 import { useShop } from '../context/ShopContext';
 import { CakeOccasion } from '../types';
 import { ArrowUpRight } from 'lucide-react';
+import { getSafeImageUrl, FALLBACK_WEDDING_IMAGE } from '../utils/imageUtils';
 
 export const OccasionsSection: React.FC = () => {
   const { setActiveOccasionFilter, setActiveCategoryFilter } = useShop();
@@ -53,8 +54,9 @@ export const OccasionsSection: React.FC = () => {
             >
               {/* Background Image */}
               <img
-                src={item.image}
+                src={getSafeImageUrl(item.image)}
                 alt={item.name}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_WEDDING_IMAGE; }}
                 className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
                 referrerPolicy="no-referrer"
               />

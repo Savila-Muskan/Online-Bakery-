@@ -47,6 +47,7 @@ import { jsPDF } from 'jspdf';
 import { useShop } from '../context/ShopContext';
 import { Product, CakeCategory, OrderStatus, CustomCakeRequest, Order, GalleryItem } from '../types';
 import { STANDARD_SIZES, STANDARD_FLAVORS, CHOCOLATE_CAKE_IMAGE, HERO_IMAGE } from '../data/mockData';
+import { compressImageFile, getSafeImageUrl, FALLBACK_CAKE_IMAGE } from '../utils/imageUtils';
 
 export const AdminDashboard: React.FC = () => {
   const { 
@@ -90,6 +91,7 @@ export const AdminDashboard: React.FC = () => {
 
   // Gallery state
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const productFileInputRef = useRef<HTMLInputElement>(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const [photoTitle, setPhotoTitle] = useState('');
   const [photoCaption, setPhotoCaption] = useState('');
@@ -174,17 +176,43 @@ export const AdminDashboard: React.FC = () => {
     { label: 'Delivered', icon: Home }
   ];
 
-  // Gallery file upload handler
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Gallery file upload handler with automatic high-compression for Vercel/localStorage
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setPhotoPreview(result);
-        setPhotoUrl(result);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressed = await compressImageFile(file, 1200, 0.82);
+        setPhotoPreview(compressed);
+        setPhotoUrl(compressed);
+      } catch (err) {
+        console.error('Error compressing gallery photo:', err);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result as string;
+          setPhotoPreview(result);
+          setPhotoUrl(result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
+  // Direct product cake image file upload handler
+  const handleProductFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const compressed = await compressImageFile(file, 1200, 0.82);
+        setProductForm(prev => ({ ...prev, imageUrl: compressed }));
+        showToast('Cake photo selected from device!');
+      } catch (err) {
+        console.error('Error uploading product photo:', err);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProductForm(prev => ({ ...prev, imageUrl: reader.result as string }));
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
@@ -1490,8 +1518,9 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                   >
                     <div className="relative aspect-square bg-[#FAF7F5] overflow-hidden">
                       <img 
-                        src={item.url} 
+                        src={getSafeImageUrl(item.url)} 
                         alt={item.title} 
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-2.5 left-2.5">
@@ -1595,7 +1624,12 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                     {products.map((p) => (
                       <tr key={p.id} className="hover:bg-[#FFF9FA]">
                         <td className="p-3.5 flex items-center gap-3">
-                          <img src={p.images[0]} alt="" className="w-12 h-12 rounded-xl object-cover shrink-0 border border-[#FAD4DB]" />
+                          <img 
+                            src={getSafeImageUrl(p.images[0])} 
+                            alt="" 
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
+                            className="w-12 h-12 rounded-xl object-cover shrink-0 border border-[#FAD4DB]" 
+                          />
                           <div>
                             <p className="font-bold text-[#241F1E]">{p.name}</p>
                             <p className="text-[11px] text-[#7A6D72] line-clamp-1">{p.shortDescription}</p>
@@ -1711,33 +1745,58 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                       />
                     </div>
 
-                    {/* Cake Image with Gallery Picker */}
+                    {/* Cake Image with Direct Upload & Gallery Picker */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
                         <label className="font-bold text-[#52454A]">Cake Picture</label>
-                        <button
-                          type="button"
-                          onClick={() => setGalleryPickerForProduct(true)}
-                          className="text-[11px] text-[#FF4B72] font-bold hover:underline flex items-center gap-1 cursor-pointer"
-                        >
-                          <Camera className="w-3.5 h-3.5" />
-                          <span>Pick from Gallery</span>
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => productFileInputRef.current?.click()}
+                            className="text-[11px] text-[#25D366] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Device Photo</span>
+                          </button>
+                          <span className="text-[#FAD4DB]">|</span>
+                          <button
+                            type="button"
+                            onClick={() => setGalleryPickerForProduct(true)}
+                            className="text-[11px] text-[#FF4B72] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                          >
+                            <Camera className="w-3.5 h-3.5" />
+                            <span>Pick from Gallery</span>
+                          </button>
+                        </div>
                       </div>
+
+                      <input
+                        type="file"
+                        ref={productFileInputRef}
+                        accept="image/*"
+                        onChange={handleProductFileSelect}
+                        className="hidden"
+                      />
 
                       <div className="flex gap-2.5 items-center">
                         <img
-                          src={productForm.imageUrl}
-                          alt=""
-                          className="w-12 h-12 rounded-xl object-cover border border-[#FAD4DB] shrink-0"
+                          src={getSafeImageUrl(productForm.imageUrl)}
+                          alt="Cake Preview"
+                          onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
+                          className="w-14 h-14 rounded-xl object-cover border border-[#FAD4DB] shrink-0 bg-[#FFF9FA]"
                         />
-                        <input
-                          type="text"
-                          value={productForm.imageUrl}
-                          onChange={(e) => setProductForm({ ...productForm, imageUrl: e.target.value })}
-                          placeholder="Image URL or choose from gallery"
-                          className="flex-1 p-2.5 bg-[#FFF9FA] border border-[#FAD4DB] rounded-xl focus:outline-none"
-                        />
+                        <div className="flex-1 space-y-1">
+                          <input
+                            type="text"
+                            value={productForm.imageUrl}
+                            onChange={(e) => setProductForm({ ...productForm, imageUrl: e.target.value })}
+                            placeholder="Image URL or click 'Upload Device Photo'"
+                            className="w-full p-2.5 bg-[#FFF9FA] border border-[#FAD4DB] rounded-xl focus:outline-none"
+                          />
+                          <p className="text-[10px] text-[#7A6D72]">
+                            Supports device upload (JPEG/PNG/WebP), gallery picker, or image URL.
+                          </p>
+                        </div>
                       </div>
                     </div>
 
@@ -2056,8 +2115,9 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
             <form onSubmit={handleApplyPhotoToCake} className="space-y-4 text-xs">
               <div className="flex items-center gap-3 p-3 bg-[#FFF9FA] rounded-2xl border border-[#FAD4DB]">
                 <img 
-                  src={selectedPhotoForCake.url} 
+                  src={getSafeImageUrl(selectedPhotoForCake.url)} 
                   alt="" 
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                   className="w-16 h-16 rounded-xl object-cover border border-[#FAD4DB]"
                 />
                 <div>
@@ -2137,8 +2197,9 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                   className="group relative aspect-square rounded-2xl overflow-hidden border border-[#FAD4DB] hover:border-[#FF4B72] cursor-pointer shadow-sm hover:shadow-md transition-all"
                 >
                   <img 
-                    src={item.url} 
+                    src={getSafeImageUrl(item.url)} 
                     alt={item.title} 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = FALLBACK_CAKE_IMAGE; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-2.5 text-white">

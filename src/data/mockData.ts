@@ -1,15 +1,25 @@
 import { Product, CakeCategory, CakeOccasion, CakeSize, CakeFlavor, CakeAddOn, Review, Order, CustomCakeRequest, GalleryItem } from '../types';
 
-export const HERO_PINK_ROSE_CAKE = '/src/assets/images/cake_shop_hero_rose_1790417479675.jpg';
+import heroPinkRoseCakeImg from '../assets/images/cake_shop_hero_rose_1790417479675.jpg';
+import chocolateCakeImg from '../assets/images/cake_chocolate_truffle_1790416770704.jpg';
+import redVelvetImg from '../assets/images/cake_red_velvet_1790416794246.jpg';
+import mangoCakeImg from '../assets/images/cake_mango_tropical_1790417496175.jpg';
+import cupcakesImg from '../assets/images/cake_cupcakes_trio_1790417512414.jpg';
+import photoCakeImg from '../assets/images/cake_photo_edible_1790417526433.jpg';
+import weddingCakeImg from '../assets/images/hero_luxury_cake_1790416757744.jpg';
+import lotusCakeImg from '../assets/images/cake_lotus_biscoff_1790416782758.jpg';
+import atelierImg from '../assets/images/bakery_atelier_story_1790416805910.jpg';
+
+export const HERO_PINK_ROSE_CAKE = heroPinkRoseCakeImg;
 export const HERO_IMAGE = HERO_PINK_ROSE_CAKE;
-export const CHOCOLATE_CAKE_IMAGE = '/src/assets/images/cake_chocolate_truffle_1790416770704.jpg';
-export const RED_VELVET_IMAGE = '/src/assets/images/cake_red_velvet_1790416794246.jpg';
-export const MANGO_CAKE_IMAGE = '/src/assets/images/cake_mango_tropical_1790417496175.jpg';
-export const CUPCAKES_IMAGE = '/src/assets/images/cake_cupcakes_trio_1790417512414.jpg';
-export const PHOTO_CAKE_IMAGE = '/src/assets/images/cake_photo_edible_1790417526433.jpg';
-export const WEDDING_CAKE_IMAGE = '/src/assets/images/hero_luxury_cake_1790416757744.jpg';
-export const LOTUS_CAKE_IMAGE = '/src/assets/images/cake_lotus_biscoff_1790416782758.jpg';
-export const ATELIER_IMAGE = '/src/assets/images/bakery_atelier_story_1790416805910.jpg';
+export const CHOCOLATE_CAKE_IMAGE = chocolateCakeImg;
+export const RED_VELVET_IMAGE = redVelvetImg;
+export const MANGO_CAKE_IMAGE = mangoCakeImg;
+export const CUPCAKES_IMAGE = cupcakesImg;
+export const PHOTO_CAKE_IMAGE = photoCakeImg;
+export const WEDDING_CAKE_IMAGE = weddingCakeImg;
+export const LOTUS_CAKE_IMAGE = lotusCakeImg;
+export const ATELIER_IMAGE = atelierImg;
 
 export const STANDARD_SIZES: CakeSize[] = [
   { id: 'size-1.5', name: '1.5 Lbs (Standard)', weightLabel: '1.5 Lb', servings: '4 - 6 Slices', priceMultiplier: 0.85 },
