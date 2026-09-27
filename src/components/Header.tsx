@@ -69,19 +69,19 @@ export const Header: React.FC = () => {
           {/* Right Contact Info & Socials */}
           <div className="flex items-center gap-4 text-xs">
             <a 
-              href="tel:+923001234567" 
+              href="tel:+923493438060" 
               className="flex items-center gap-1 hover:text-[#FFE3EB] transition-colors"
             >
               <Phone className="w-3 h-3" />
-              <span>+92 300 1234567</span>
+              <span>+92 349 3438060</span>
             </a>
             <span className="opacity-50 hidden sm:inline">|</span>
             <a 
-              href="mailto:info@cakeshop.com" 
+              href="mailto:savilamuskan26@gmail.com" 
               className="hidden sm:flex items-center gap-1 hover:text-[#FFE3EB] transition-colors"
             >
               <Mail className="w-3 h-3" />
-              <span>info@cakeshop.com</span>
+              <span>savilamuskan26@gmail.com</span>
             </a>
             <div className="hidden md:flex items-center gap-2 pl-2">
               <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:opacity-80">

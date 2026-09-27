@@ -21,7 +21,7 @@ export const OrderConfirmationModal: React.FC = () => {
     const text = encodeURIComponent(
       `Hello CakeShop! I just placed Order #${confirmedOrder.orderNumber}.\n• Customer: ${confirmedOrder.customer.fullName}\n• Total: ₨ ${confirmedOrder.total.toLocaleString()}\n• Delivery: ${confirmedOrder.customer.deliveryDate} (${confirmedOrder.customer.deliveryTimeSlot})\n• Address: ${confirmedOrder.customer.deliveryAddress}, ${confirmedOrder.customer.city}`
     );
-    window.open(`https://wa.me/923008472911?text=${text}`, '_blank');
+    window.open(`https://wa.me/923493438060?text=${text}`, '_blank');
   };
 
   return (

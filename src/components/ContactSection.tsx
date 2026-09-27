@@ -46,7 +46,7 @@ export const ContactSection: React.FC = () => {
             {/* Quick Action Buttons: Direct Call & WhatsApp */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a
-                href="tel:+923008472911"
+                href="tel:+923493438060"
                 className="p-4 rounded-2xl bg-[#FFF9FA] border border-[#FAD4DB] hover:border-[#FF4B72] transition-all flex items-center gap-3.5 group"
               >
                 <div className="w-10 h-10 rounded-full bg-[#FFF0F3] text-[#FF4B72] flex items-center justify-center shrink-0">
@@ -54,12 +54,12 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-[10px] text-[#7A716C] uppercase tracking-wider">Direct Hotline</p>
-                  <p className="text-xs font-bold text-[#241F1E] group-hover:text-[#FF4B72]">+92 300 8472911</p>
+                  <p className="text-xs font-bold text-[#241F1E] group-hover:text-[#FF4B72]">+92 349 3438060</p>
                 </div>
               </a>
 
               <a
-                href="https://wa.me/923008472911?text=Hello%20CakeShop,%20I%20have%20an%20inquiry%20regarding%20a%20cake%20order."
+                href="https://wa.me/923493438060?text=Hello%20CakeShop,%20I%20have%20an%20inquiry%20regarding%20a%20cake%20order."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 rounded-2xl bg-[#25D366]/5 border border-[#25D366]/20 hover:border-[#25D366] transition-all flex items-center gap-3.5 group"
@@ -69,7 +69,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-[10px] text-[#7A716C] uppercase tracking-wider">WhatsApp Chat</p>
-                  <p className="text-xs font-bold text-[#128C7E]">+92 300 8472911</p>
+                  <p className="text-xs font-bold text-[#128C7E]">+92 349 3438060</p>
                 </div>
               </a>
             </div>
@@ -78,7 +78,9 @@ export const ContactSection: React.FC = () => {
             <div className="p-5 rounded-2xl bg-[#FFF9FA] border border-[#FAD4DB] space-y-3 text-xs text-[#5A524D]">
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#FF4B72] shrink-0" />
-                <span>orders@cakeshop.pk</span>
+                <a href="mailto:savilamuskan26@gmail.com" className="hover:text-[#FF4B72] transition-colors">
+                  savilamuskan26@gmail.com
+                </a>
               </div>
               <div className="flex items-center gap-3">
                 <Clock className="w-4 h-4 text-[#FF4B72] shrink-0" />
@@ -183,7 +185,7 @@ export const ContactSection: React.FC = () => {
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+92 300 1234567"
+                        placeholder="+92 349 3438060"
                         className="w-full text-xs p-3 bg-white border border-[#FAD4DB] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#FF4B72]"
                       />
                     </div>

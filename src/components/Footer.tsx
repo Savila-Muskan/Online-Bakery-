@@ -88,7 +88,7 @@ export const Footer: React.FC = () => {
               </a>
 
               <a
-                href="https://wa.me/923001234567"
+                href="https://wa.me/923493438060"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-7 h-7 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:opacity-90 transition-opacity"

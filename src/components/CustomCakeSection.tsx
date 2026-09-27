@@ -63,7 +63,7 @@ export const CustomCakeSection: React.FC = () => {
     const message = encodeURIComponent(
       `Hello CakeShop!\nI just submitted a custom cake inquiry:\n• Name: ${customerName}\n• Occasion: ${occasion}\n• Flavor: ${preferredFlavor}\n• Size: ${size}\n• City: ${city}\n• Date: ${deliveryDate}\nPlease share an estimated quote!`
     );
-    window.open(`https://wa.me/923001234567?text=${message}`, '_blank');
+    window.open(`https://wa.me/923493438060?text=${message}`, '_blank');
   };
 
   return (
@@ -102,7 +102,7 @@ export const CustomCakeSection: React.FC = () => {
                 </button>
 
                 <a
-                  href="https://wa.me/923001234567?text=Hello%20CakeShop!%20I%20want%20to%20consult%20about%20a%20custom%20cake."
+                  href="https://wa.me/923493438060?text=Hello%20CakeShop!%20I%20want%20to%20consult%20about%20a%20custom%20cake."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-3 text-[#E84E7B] hover:text-[#D93C6B] text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5"
@@ -217,7 +217,7 @@ export const CustomCakeSection: React.FC = () => {
                       <input
                         type="tel"
                         required
-                        placeholder="+92 300 1234567"
+                        placeholder="+92 349 3438060"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         className="w-full text-xs p-2.5 bg-[#FFF9FA] border border-[#E0D0D5] rounded-lg focus:outline-none focus:border-[#E84E7B]"

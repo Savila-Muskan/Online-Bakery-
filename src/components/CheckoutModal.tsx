@@ -110,7 +110,7 @@ export const CheckoutModal: React.FC = () => {
                     <input
                       type="tel"
                       required
-                      placeholder="+92 300 1234567"
+                      placeholder="+92 349 3438060"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className="w-full text-xs p-2.5 bg-[#FFF9FA] border border-[#E0D0D5] rounded-lg focus:outline-none focus:border-[#E84E7B]"
@@ -229,8 +229,8 @@ export const CheckoutModal: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {[
                     { id: 'Cash on Delivery', name: 'Cash on Delivery (COD)', desc: 'Pay cash to refrigerated rider upon delivery' },
-                    { id: 'JazzCash', name: 'JazzCash', desc: 'Transfer to 0300-1234567 (CakeShop)' },
-                    { id: 'Easypaisa', name: 'Easypaisa', desc: 'Instant transfer to 0300-1234567' },
+                    { id: 'JazzCash', name: 'JazzCash', desc: 'Transfer to 0349-3438060 (CakeShop / Savila Muskan)' },
+                    { id: 'Easypaisa', name: 'Easypaisa', desc: 'Instant transfer to 0349-3438060 (Savila Muskan)' },
                     { id: 'Bank Transfer', name: 'Bank Transfer', desc: 'Meezan Bank / HBL / Alfalah' }
                   ].map((m) => {
                     const isSelected = paymentMethod === m.id;

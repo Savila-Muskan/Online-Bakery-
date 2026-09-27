@@ -118,7 +118,7 @@ export const ProductDetailModal: React.FC = () => {
     const text = encodeURIComponent(
       `Hello CakeShop!\nI would like to order:\n• Cake: ${selectedProduct.name}\n• Size: ${selectedSize.name}\n• Flavor: ${selectedFlavor.name}\n• Eggless: ${isEggless ? 'Yes' : 'No'}\n• Message: ${cakeMessage || 'None'}\n• Date: ${deliveryDate}\n• Time: ${deliveryTimeSlot}\n• Total: Rs. ${totalPrice.toLocaleString()}\nPlease confirm delivery!`
     );
-    window.open(`https://wa.me/923001234567?text=${text}`, '_blank');
+    window.open(`https://wa.me/923493438060?text=${text}`, '_blank');
   };
 
   return (

@@ -301,7 +301,7 @@ export const INITIAL_ORDERS: Order[] = [
     ],
     customer: {
       fullName: 'Bilal Ahmad',
-      phone: '+92 300 1234567',
+      phone: '+92 345 9812401',
       email: 'bilal.ahmad@gmail.com',
       city: 'Lahore',
       deliveryAddress: 'House 54, Street 12, Sector W, DHA Phase 3, Lahore',

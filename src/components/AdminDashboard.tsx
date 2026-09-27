@@ -21,6 +21,7 @@ import {
   PackageCheck,
   ShieldCheck,
   Phone,
+  Mail,
   Calendar,
   MapPin,
   ArrowLeft,
@@ -372,7 +373,7 @@ export const AdminDashboard: React.FC = () => {
 
     y += 18;
     ctx.font = '11px sans-serif';
-    ctx.fillText('UAN Hotline: +92 300 8472911 • support@cakeshop.pk • Pakistan', width / 2, y);
+    ctx.fillText('UAN Hotline: +92 349 3438060 • savilamuskan26@gmail.com • Pakistan', width / 2, y);
 
     y += 22;
     // Official Dispatch Slip Badge
@@ -501,7 +502,7 @@ export const AdminDashboard: React.FC = () => {
 
     ctx.fillStyle = '#7A6D72';
     ctx.font = '11px sans-serif';
-    ctx.fillText(`Phone: ${order.riderDetails?.phone || '+92 300 8472911'}   •   Vehicle: ${order.riderDetails?.vehicle || 'Refrigerated Cake Van'}`, 46, y + 33);
+    ctx.fillText(`Phone: ${order.riderDetails?.phone || '+92 349 3438060'}   •   Vehicle: ${order.riderDetails?.vehicle || 'Refrigerated Cake Van'}`, 46, y + 33);
 
     y += 54;
 
@@ -871,6 +872,27 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
               <span>← Back to Customer Website</span>
             </button>
           </div>
+
+          {/* Admin Direct Hotline */}
+          <div className="p-3 bg-[#FFF5F7] border border-[#FAD4DB] rounded-2xl text-center space-y-2">
+            <p className="text-[11px] font-bold text-[#FF4B72] uppercase tracking-wider">Direct Admin & Support Helpline</p>
+            <div className="flex items-center justify-center gap-3 text-xs font-bold text-[#241F1E]">
+              <a href="tel:+923493438060" className="hover:text-[#FF4B72] flex items-center gap-1 transition-colors">
+                <Phone className="w-3.5 h-3.5 text-[#FF4B72]" />
+                +92 349 3438060
+              </a>
+              <span className="text-[#FAD4DB]">•</span>
+              <a href="https://wa.me/923493438060" target="_blank" rel="noopener noreferrer" className="text-[#128C7E] hover:underline flex items-center gap-1">
+                <MessageCircle className="w-3.5 h-3.5" />
+                WhatsApp
+              </a>
+            </div>
+            <p className="text-[10px] text-[#7A6D72]">
+              <a href="mailto:savilamuskan26@gmail.com" className="hover:underline hover:text-[#FF4B72]">
+                savilamuskan26@gmail.com
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -930,6 +952,51 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
             >
               <Lock className="w-4 h-4" />
             </button>
+          </div>
+        </div>
+
+        {/* Manager & Admin Direct Helpline Strip */}
+        <div className="bg-[#FFF0F3] border-t border-b border-[#FAD4DB] px-4 py-2 text-stone-800">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center flex-wrap gap-2">
+              <span className="font-bold text-[#FF4B72] uppercase tracking-wider text-[10px] bg-white px-2 py-0.5 rounded-full border border-[#FAD4DB]">
+                Admin & Hotline
+              </span>
+              <span className="text-[#241F1E] font-bold text-xs flex items-center gap-1">
+                <Phone className="w-3 h-3 text-[#FF4B72]" />
+                +92 349 3438060
+              </span>
+              <span className="text-[#FAD4DB] hidden sm:inline">•</span>
+              <span className="text-[#52454A] font-medium text-xs flex items-center gap-1">
+                <Mail className="w-3 h-3 text-[#FF4B72]" />
+                savilamuskan26@gmail.com
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <a
+                href="tel:+923493438060"
+                className="px-2.5 py-1 bg-white hover:bg-[#FFE3E9] text-[#FF4B72] border border-[#FAD4DB] rounded-lg font-bold text-[11px] flex items-center gap-1 transition-colors shadow-xs"
+              >
+                <Phone className="w-3 h-3" />
+                Call Direct
+              </a>
+              <a
+                href="https://wa.me/923493438060?text=Hello%20CakeShop%20Admin,%20I%20have%20an%20urgent%20inquiry%20regarding%20orders."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2.5 py-1 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg font-bold text-[11px] flex items-center gap-1 transition-colors shadow-xs"
+              >
+                <MessageCircle className="w-3 h-3" />
+                WhatsApp
+              </a>
+              <a
+                href="mailto:savilamuskan26@gmail.com"
+                className="px-2.5 py-1 bg-white hover:bg-stone-50 text-[#52454A] border border-[#FAD4DB] rounded-lg font-medium text-[11px] flex items-center gap-1 transition-colors"
+              >
+                <Mail className="w-3 h-3 text-[#FF4B72]" />
+                Email
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1003,6 +1070,56 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+        {/* Verified Store Contact & Dispatch Profile */}
+        <div className="bg-gradient-to-r from-[#FFF5F7] via-white to-[#FFF9FA] border border-[#FAD4DB] rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-[#FF4B72] text-white flex items-center justify-center font-serif font-bold text-xl shadow-sm shrink-0">
+              C
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-serif font-bold text-[#241F1E] text-base">CakeShop Official Store Profile</h3>
+                <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                  Verified Contact
+                </span>
+              </div>
+              <div className="text-xs text-[#7A6D72] flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                <span>Phone / Hotline: <strong className="text-[#241F1E]">+92 349 3438060</strong></span>
+                <span className="text-[#FAD4DB]">•</span>
+                <span>Email: <strong className="text-[#241F1E]">savilamuskan26@gmail.com</strong></span>
+                <span className="text-[#FAD4DB] hidden sm:inline">•</span>
+                <span className="hidden sm:inline">JazzCash / Easypaisa: <strong className="text-[#241F1E]">0349-3438060 (Savila Muskan)</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center flex-wrap gap-2 shrink-0">
+            <a
+              href="tel:+923493438060"
+              className="px-3 py-2 bg-[#FF4B72] hover:bg-[#E03A60] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Call +92 349 3438060</span>
+            </a>
+            <a
+              href="https://wa.me/923493438060"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-2 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>WhatsApp</span>
+            </a>
+            <a
+              href="mailto:savilamuskan26@gmail.com"
+              className="px-3 py-2 bg-white border border-[#FAD4DB] hover:bg-[#FFF5F7] text-[#52454A] rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-[#FF4B72]" />
+              <span>Email</span>
+            </a>
+          </div>
+        </div>
 
         {/* Quick KPI Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -1285,7 +1402,7 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                               setSelectedOrderForRider(order);
                               setRiderForm({
                                 name: order.riderDetails?.name || 'Muhammad Rizwan',
-                                phone: order.riderDetails?.phone || '+92 300 8472911',
+                                phone: order.riderDetails?.phone || '+92 349 3438060',
                                 vehicle: order.riderDetails?.vehicle || 'Refrigerated Cake Van (LED-4192)'
                               });
                             }}
@@ -2137,7 +2254,7 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                     <h2 className="font-serif text-2xl font-bold tracking-tight text-[#241F1E]">CakeShop</h2>
                   </div>
                   <p className="text-xs text-[#7A6D72] italic font-medium">Artisanal Bakery & Fresh Cake Confectionery</p>
-                  <p className="text-[11px] text-[#7A6D72]">UAN: +92 300 8472911 • support@cakeshop.pk • Pakistan</p>
+                  <p className="text-[11px] text-[#7A6D72]">UAN: +92 349 3438060 • savilamuskan26@gmail.com • Pakistan</p>
                   <div className="pt-2">
                     <span className="inline-block bg-[#241F1E] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-md tracking-wider">
                       Official Kitchen & Delivery Dispatch Slip
@@ -2221,7 +2338,7 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                       {selectedOrderForPrint.riderDetails?.name || 'In-House Cake Courier'}
                     </p>
                     <p className="text-[11px] text-[#7A6D72]">
-                      Phone: {selectedOrderForPrint.riderDetails?.phone || '+92 300 8472911'} • Vehicle: {selectedOrderForPrint.riderDetails?.vehicle || 'Refrigerated Cake Van'}
+                      Phone: {selectedOrderForPrint.riderDetails?.phone || '+92 349 3438060'} • Vehicle: {selectedOrderForPrint.riderDetails?.vehicle || 'Refrigerated Cake Van'}
                     </p>
                   </div>
                   <span className="text-[10px] font-bold uppercase bg-white border border-[#FAD4DB] text-[#FF4B72] px-2.5 py-1 rounded-lg">
@@ -2396,7 +2513,7 @@ ${order.items.map((it, i) => `${i + 1}. ${it.quantity}x ${it.product.name} [${it
                   required
                   value={riderForm.phone}
                   onChange={(e) => setRiderForm({ ...riderForm, phone: e.target.value })}
-                  placeholder="+92 300 8472911"
+                  placeholder="+92 349 3438060"
                   className="w-full p-2.5 bg-[#FFF9FA] border border-[#FAD4DB] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#FF4B72]"
                 />
               </div>

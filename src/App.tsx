@@ -84,7 +84,7 @@ function AppContent() {
 
       {/* Floating WhatsApp Concierge Button (Pakistan Local Integration) */}
       <a
-        href="https://wa.me/923008472911?text=Hello%20CakeShop!%20I%20would%20like%20to%20order%20a%20fresh%20celebration%20cake."
+        href="https://wa.me/923493438060?text=Hello%20CakeShop!%20I%20would%20like%20to%20order%20a%20fresh%20celebration%20cake."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-40 p-3.5 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-2xl flex items-center gap-2 group transition-all duration-300 hover:scale-105 cursor-pointer"
