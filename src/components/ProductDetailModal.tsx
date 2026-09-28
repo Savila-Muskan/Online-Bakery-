@@ -116,8 +116,22 @@ export const ProductDetailModal: React.FC = () => {
   };
 
   const handleWhatsAppOrder = () => {
+    const addOnsText = selectedAddOns.length > 0 ? selectedAddOns.map(a => a.name).join(', ') : 'None';
     const text = encodeURIComponent(
-      `Hello CakeShop!\nI would like to order:\n• Cake: ${selectedProduct.name}\n• Size: ${selectedSize.name}\n• Flavor: ${selectedFlavor.name}\n• Eggless: ${isEggless ? 'Yes' : 'No'}\n• Message: ${cakeMessage || 'None'}\n• Date: ${deliveryDate}\n• Time: ${deliveryTimeSlot}\n• Total: Rs. ${totalPrice.toLocaleString()}\nPlease confirm delivery!`
+`🎂 *NEW DIRECT CAKE INQUIRY FOR BAKER* 🎂
+━━━━━━━━━━━━━━━━━━━━━━
+🍰 *Cake:* ${selectedProduct.name}
+⚖️ *Size:* ${selectedSize.name} (${selectedSize.weightLabel})
+🍨 *Flavor:* ${selectedFlavor.name}
+🥚 *Eggless:* ${isEggless ? 'Yes (100% Eggless)' : 'Standard'}
+✍️ *Custom Cake Message:* ${cakeMessage.trim() || 'None'}
+🏷️ *Acrylic Topper:* ${topperText.trim() || 'None'}
+🎁 *Add-ons:* ${addOnsText}
+📅 *Required Delivery Date:* ${deliveryDate}
+⏰ *Delivery Slot:* ${deliveryTimeSlot}
+💰 *Estimated Price:* ₨ ${totalPrice.toLocaleString()}
+━━━━━━━━━━━━━━━━━━━━━━
+Please confirm kitchen availability and baking slot!`
     );
     window.open(`https://wa.me/923493438060?text=${text}`, '_blank');
   };

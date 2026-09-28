@@ -8,17 +8,49 @@ export const ContactSection: React.FC = () => {
   const [city, setCity] = useState('Lahore');
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
+  const [lastMessageDetails, setLastMessageDetails] = useState<{
+    name: string;
+    phone: string;
+    email: string;
+    city: string;
+    message: string;
+    whatsappUrl: string;
+  } | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) return;
+    if (!name.trim() || !phone.trim()) return;
+
+    // Compose formatted WhatsApp message for the Baker (+92 349 3438060)
+    const formattedWaText = 
+`🎂 *NEW MESSAGE FOR BAKER (CAKESHOP PK)* 🎂
+━━━━━━━━━━━━━━━━━━━━━━
+👤 *Customer Name:* ${name.trim()}
+📞 *Customer Phone / WhatsApp:* ${phone.trim()}
+📧 *Email Address:* ${email.trim() || 'Not provided'}
+📍 *City:* ${city}
+
+📝 *Customer Note / Inquiry:*
+${message.trim() || 'No specific note provided'}
+━━━━━━━━━━━━━━━━━━━━━━
+⏰ *Sent:* ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+💬 *Source:* CakeShop Website Contact Form`;
+
+    const whatsappUrl = `https://wa.me/923493438060?text=${encodeURIComponent(formattedWaText)}`;
+
+    setLastMessageDetails({
+      name: name.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      city,
+      message: message.trim(),
+      whatsappUrl
+    });
+
     setSent(true);
-    setTimeout(() => {
-      setName('');
-      setPhone('+92 ');
-      setEmail('');
-      setMessage('');
-    }, 1000);
+
+    // Open Baker's WhatsApp with customer's details
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -145,19 +177,77 @@ export const ContactSection: React.FC = () => {
                 Have a special request, event partnership, or question? Leave your note below and our concierge team will respond promptly.
               </p>
 
-              {sent ? (
-                <div className="p-6 bg-white rounded-xl border border-[#FAD4DB] text-center space-y-3">
-                  <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                  <h4 className="font-serif text-xl font-bold text-[#241F1E]">Message Dispatched</h4>
-                  <p className="text-xs text-[#6B635E]">
-                    Thank you, {name || 'valued customer'}. Our concierge team will reach out via WhatsApp / phone shortly.
-                  </p>
-                  <button
-                    onClick={() => setSent(false)}
-                    className="text-xs text-[#FF4B72] font-bold hover:underline cursor-pointer"
-                  >
-                    Send another note
-                  </button>
+              {sent && lastMessageDetails ? (
+                <div className="p-6 sm:p-7 bg-white rounded-2xl border border-emerald-200 text-center space-y-4 shadow-sm animate-in fade-in">
+                  <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-serif text-2xl font-bold text-[#241F1E]">
+                      Message Sent to Baker's WhatsApp!
+                    </h4>
+                    <p className="text-xs text-[#6B635E] mt-1 max-w-md mx-auto">
+                      All your contact details and message have been formatted and directed to Baker <strong>+92 349 3438060</strong>.
+                    </p>
+                  </div>
+
+                  {/* Summary of Transmitted Data */}
+                  <div className="bg-[#FFF9FA] border border-[#FAD4DB] rounded-xl p-4 text-left text-xs space-y-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B72] block">
+                      Dispatched Details:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#241F1E]">
+                      <div>
+                        <span className="text-[#7A6D72] block text-[10px]">Customer Name:</span>
+                        <strong>{lastMessageDetails.name}</strong>
+                      </div>
+                      <div>
+                        <span className="text-[#7A6D72] block text-[10px]">Phone Number:</span>
+                        <strong className="text-[#FF4B72]">{lastMessageDetails.phone}</strong>
+                      </div>
+                      <div>
+                        <span className="text-[#7A6D72] block text-[10px]">Email Address:</span>
+                        <span>{lastMessageDetails.email || 'Not provided'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[#7A6D72] block text-[10px]">City:</span>
+                        <span>{lastMessageDetails.city}</span>
+                      </div>
+                    </div>
+                    {lastMessageDetails.message && (
+                      <div className="pt-2 border-t border-[#FAD4DB]">
+                        <span className="text-[#7A6D72] block text-[10px]">Customer Note / Inquiry:</span>
+                        <p className="text-[#241F1E] italic mt-0.5">"{lastMessageDetails.message}"</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                    <a
+                      href={lastMessageDetails.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-6 py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold tracking-wider uppercase rounded-xl transition-all shadow-md shadow-[#25D366]/20 flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Open WhatsApp Chat (+92 349 3438060)</span>
+                    </a>
+                    
+                    <button
+                      onClick={() => {
+                        setSent(false);
+                        setName('');
+                        setPhone('+92 ');
+                        setEmail('');
+                        setMessage('');
+                      }}
+                      className="w-full sm:w-auto px-5 py-3 border border-[#FAD4DB] hover:bg-[#FFF9FA] text-[#52454A] text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+                    >
+                      Send Another Note
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">

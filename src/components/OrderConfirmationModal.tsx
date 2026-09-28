@@ -18,10 +18,36 @@ export const OrderConfirmationModal: React.FC = () => {
   };
 
   const handleWhatsAppConfirm = () => {
-    const text = encodeURIComponent(
-      `Hello CakeShop! I just placed Order #${confirmedOrder.orderNumber}.\n• Customer: ${confirmedOrder.customer.fullName}\n• Total: ₨ ${confirmedOrder.total.toLocaleString()}\n• Delivery: ${confirmedOrder.customer.deliveryDate} (${confirmedOrder.customer.deliveryTimeSlot})\n• Address: ${confirmedOrder.customer.deliveryAddress}, ${confirmedOrder.customer.city}`
-    );
-    window.open(`https://wa.me/923493438060?text=${text}`, '_blank');
+    const itemsList = confirmedOrder.items
+      .map(
+        (it) =>
+          `  • ${it.quantity}x ${it.product.name} (${it.selectedSize.name}, ${it.selectedFlavor.name}${
+            it.isEggless ? ' - Eggless' : ''
+          }${it.cakeMessage ? ` | Cake Msg: "${it.cakeMessage}"` : ''}) = ₨ ${it.totalPrice.toLocaleString()}`
+      )
+      .join('\n');
+
+    const formattedOrderWa = 
+`🎂 *NEW ORDER CONFIRMATION FOR BAKER* 🎂
+━━━━━━━━━━━━━━━━━━━━━━
+🆔 *Order Number:* #${confirmedOrder.orderNumber}
+👤 *Customer Name:* ${confirmedOrder.customer.fullName}
+📞 *Customer Phone / WhatsApp:* ${confirmedOrder.customer.phone}
+📧 *Customer Email:* ${confirmedOrder.customer.email || 'Not provided'}
+📍 *Delivery City:* ${confirmedOrder.customer.city}
+🏠 *Complete Delivery Address:* ${confirmedOrder.customer.deliveryAddress}
+${confirmedOrder.customer.landmark ? `🏛️ *Nearby Landmark:* ${confirmedOrder.customer.landmark}\n` : ''}📅 *Delivery Date:* ${confirmedOrder.customer.deliveryDate}
+⏰ *Time Slot:* ${confirmedOrder.customer.deliveryTimeSlot}
+💳 *Payment Method:* ${confirmedOrder.paymentMethod}
+
+🍰 *Ordered Cake Items:*
+${itemsList}
+
+💰 *Grand Total Payable:* ₨ ${confirmedOrder.total.toLocaleString()}
+${confirmedOrder.customer.orderNotes ? `\n📝 *Customer Order Note:* "${confirmedOrder.customer.orderNotes}"\n` : ''}━━━━━━━━━━━━━━━━━━━━━━
+Please confirm order reception and kitchen dispatch!`;
+
+    window.open(`https://wa.me/923493438060?text=${encodeURIComponent(formattedOrderWa)}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

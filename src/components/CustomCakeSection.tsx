@@ -43,6 +43,26 @@ export const CustomCakeSection: React.FC = () => {
     }
   };
 
+  const buildCustomCakeWhatsAppMessage = (reqId: string) => {
+    return (
+`🎂 *NEW CUSTOM CAKE INQUIRY FOR BAKER* 🎂
+━━━━━━━━━━━━━━━━━━━━━━
+🆔 *Inquiry Ref:* #${reqId}
+👤 *Customer Name:* ${customerName.trim()}
+📞 *Customer Phone / WhatsApp:* ${phone.trim()}
+📍 *Delivery City:* ${city}
+📅 *Required Date:* ${deliveryDate}
+
+🎉 *Occasion:* ${occasion}
+🍰 *Cake Flavor:* ${preferredFlavor}
+⚖️ *Size / Weight:* ${size}
+🎨 *Theme:* ${theme}
+🌸 *Color Palette:* ${colorPreference}
+${messageOnCake.trim() ? `✍️ *Text on Cake:* "${messageOnCake.trim()}"\n` : ''}${additionalInstructions.trim() ? `📝 *Customer Notes / Instructions:* "${additionalInstructions.trim()}"\n` : ''}━━━━━━━━━━━━━━━━━━━━━━
+💬 *Sent via CakeShop Bespoke Order Portal*`
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerName || !phone) return;
@@ -64,13 +84,15 @@ export const CustomCakeSection: React.FC = () => {
 
     setSubmittedRequestId(newReq.id);
     setIsSubmitted(true);
+
+    // Direct Baker WhatsApp dispatch
+    const waText = buildCustomCakeWhatsAppMessage(newReq.id);
+    window.open(`https://wa.me/923493438060?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleOpenWhatsAppConcierge = () => {
-    const message = encodeURIComponent(
-      `Hello CakeShop!\nI just submitted a custom cake inquiry:\n• Name: ${customerName}\n• Occasion: ${occasion}\n• Flavor: ${preferredFlavor}\n• Size: ${size}\n• City: ${city}\n• Date: ${deliveryDate}\nPlease share an estimated quote!`
-    );
-    window.open(`https://wa.me/923493438060?text=${message}`, '_blank');
+    const waText = buildCustomCakeWhatsAppMessage(submittedRequestId || 'NEW');
+    window.open(`https://wa.me/923493438060?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
